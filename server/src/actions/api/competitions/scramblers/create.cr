@@ -1,4 +1,4 @@
-class Api::Competitions::Users::Create < ApiAction
+class Api::Competitions::Scramblers::Create < ApiAction
   def generate_password
     allowed_chars = "abcdefghijklmnopqrstuvwxyz1234567890"
     password_length = 15
@@ -12,7 +12,7 @@ class Api::Competitions::Users::Create < ApiAction
   nested_route do
     Api::Auth::RequireCompetitionAdmin.validate(competition_id)
     password = generate_password
-    user = SignUpUser.create!(name: params.from_json["name"].as_s, password: password, password_confirmation: password)
+    user = SignUpUser.create!(name: params.from_json["name"].as_s, password: password, password_confirmation: password, competition_id: competition_id.to_i64)
     json({id: user.id, password: password})
   end
 end

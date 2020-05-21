@@ -3,7 +3,7 @@ class SignUpUser < User::SaveOperation
   # Change password validations in src/operations/mixins/password_validations.cr
   include PasswordValidations
 
-  permit_columns email, name
+  permit_columns email, name, competition_id
   attribute password : String
   attribute password_confirmation : String
 

@@ -5,6 +5,7 @@ class Api::Competitions::Scrambles::Update < ApiAction
     scramble = ScrambleQuery
       .new
       .preload_scramblers
+      .preload_scramble_accesses
       .id(scramble_id)
       .first
 
@@ -19,9 +20,9 @@ class Api::Competitions::Scrambles::Update < ApiAction
 
     params.from_json["close"]?.try do |close_scrambles|
       scrambler_ids_to_remove = close_scrambles.as_a
-      scramble.scramblers.each do |scrambler|
-        if scrambler_ids_to_remove.includes? scrambler.id
-          scrambler.delete
+      scramble.scramble_accesses.each do |access|
+        if scrambler_ids_to_remove.includes? access.scrambler_id
+          access.delete
         end
       end
     end

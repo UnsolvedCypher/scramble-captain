@@ -4,7 +4,8 @@ class UserToken
   ALGORITHM = JWT::Algorithm::HS256
 
   def self.generate(user : User) : String
-    payload = {"user_id" => user.id}
+    # Tokens are valid for 12 hours
+    payload = {"user_id" => user.id, "exp" => Time.utc.to_unix + (12 * 60 * 60 * 1000)}
 
     settings.stubbed_token || create_token(payload)
   end
