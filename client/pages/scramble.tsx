@@ -79,10 +79,10 @@ export default class ScramblePage extends React.Component<ScramblePageProps, Scr
         <Iframe
           width="100%"
           height="100%"
-          url={`http://localhost:5000/api/competitions/${competitionId}/scrambles/${currScrambleId}`}
+          url={`${process.env.backend}/api/competitions/${competitionId}/scrambles/${currScrambleId}`}
         />
 
-        {/* <iframe title="Scramble" src={`http://localhost:5000/api/competitions/${competitionId}/scrambles/${currScrambleId}`} /> */}
+        {/* <iframe title="Scramble" src={`process.env.backend/api/competitions/${competitionId}/scrambles/${currScrambleId}`} /> */}
       </div>
     );
   }

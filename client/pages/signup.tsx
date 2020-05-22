@@ -27,7 +27,7 @@ class SignUpPage extends React.Component<{}, LoginState> {
     const {
       login, password, passwordConfirmation, name,
     } = this.state;
-    const res = await fetch('http://localhost:5000/api/sign_ups', {
+    const res = await fetch(`${process.env.backend}/api/sign_ups`, {
       method: 'post',
       body: JSON.stringify({
         user: {

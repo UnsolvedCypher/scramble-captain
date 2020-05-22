@@ -21,7 +21,7 @@ class LoginPage extends React.Component<{}, LoginState> {
 
   attemptLogin = async () => {
     const { login, password } = this.state;
-    const res = await fetch('http://localhost:5000/api/sign_ins', {
+    const res = await fetch(`${process.env.backend}/api/sign_ins`, {
       method: 'post',
       body: JSON.stringify({
         user: {

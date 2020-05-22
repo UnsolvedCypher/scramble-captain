@@ -53,7 +53,7 @@ export async function authFetch(
   url: string, method: string, body: any, ctx: NextPageContext,
 ) {
   const jwt = getJwt(ctx);
-  const res = await fetch(`http://localhost:5000/${url}`, {
+  const res = await fetch(`${process.env.backend}/${url}`, {
     method,
     ...(body && { body: JSON.stringify(body) }),
     headers: {
@@ -72,7 +72,7 @@ export async function authFetchForm(
   url: string, method: string, body: FormData, ctx: NextPageContext,
 ) {
   const jwt = getJwt(ctx);
-  const res = await fetch(`http://localhost:5000/${url}`, {
+  const res = await fetch(`${process.env.backend}/${url}`, {
     method,
     body,
     headers: {
