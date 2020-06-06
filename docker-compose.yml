@@ -26,7 +26,7 @@ services:
     environment:
       - SECRET_KEY_BASE=1234
       - LUCKY_ENV=production
-      - DATABASE_URL=postgresql://postgres@localhost/scramble_captain_development
+      - DATABASE_URL=postgresql://postgres@localhost/scramble_captain_production
       - SEND_GRID_KEY=unused
       - APP_DOMAIN=localhost
       - CLIENT_URL=http://localhost:3000
