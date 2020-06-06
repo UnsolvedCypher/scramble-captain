@@ -1,0 +1,12 @@
+.dockerignore
+.gitignore
+/docs/
+/lib/
+/bin/
+/.shards/
+*.dwarf
+*.dwarf
+*.local.cr
+.env
+/tmp
+start_server

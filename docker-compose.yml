@@ -1,0 +1,48 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    container_name: scramble_captain_pg
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
+    volumes:
+      - scramble_captain_db:/var/lib/postgresql/data
+  frontend:
+    stdin_open: true
+    tty: true
+    build: client
+    image: scramble_captain_client
+    command: yarn start
+    ports:
+      - 3000:3000
+    network_mode: "host"
+  backend:
+    stdin_open: true
+    tty: true
+    build: server
+    image: scramble_captain_server
+    environment:
+      - SECRET_KEY_BASE=1234
+      - LUCKY_ENV=production
+      - DATABASE_URL=postgresql://postgres@localhost/scramble_captain_development
+      - SEND_GRID_KEY=unused
+      - APP_DOMAIN=localhost
+      - CLIENT_URL=http://localhost:3000
+      - PORT=5000
+    command: lucky db.create && lucky db.migrate && ./start_server
+    # command: bash
+    # command: lucky db.create && lucky db.migrate && lucky build.release && ./start_server
+    depends_on:
+      - postgres
+    ports:
+      - 5000:5000
+    network_mode: "host"
+    volumes:
+      - scramble_captain_scrambles:/usr/src/scramble-captain-server/assets/scrambles
+volumes:
+  scramble_captain_db:
+    driver: local
+  scramble_captain_scrambles:
+    driver: local

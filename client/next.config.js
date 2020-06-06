@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    backend: 'http://localhost:5000',
+    backend: process.env.SERVER_URL || 'http://localhost:5000',
   },
 };
