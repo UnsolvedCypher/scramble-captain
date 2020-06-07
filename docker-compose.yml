@@ -15,8 +15,6 @@ services:
     build: client
     image: scramble_captain_client
     command: yarn start
-    ports:
-      - 3000:3000
     network_mode: "host"
   backend:
     stdin_open: true
@@ -28,16 +26,14 @@ services:
       - LUCKY_ENV=production
       - DATABASE_URL=postgresql://postgres@localhost/scramble_captain_production
       - SEND_GRID_KEY=unused
-      - APP_DOMAIN=localhost
-      - CLIENT_URL=http://localhost:3000
+      - APP_DOMAIN=${SCRAMBLE_CAPTAIN_DOMAIN}
+      - CLIENT_URL=http://${SCRAMBLE_CAPTAIN_DOMAIN}:3000
       - PORT=5000
-    command: lucky db.create && lucky db.migrate && ./start_server
-    # command: bash
+    command: bash -c "./lucky db.create && ./lucky db.migrate && ./start_server"
+    # command: ./start_server
     # command: lucky db.create && lucky db.migrate && lucky build.release && ./start_server
     depends_on:
       - postgres
-    ports:
-      - 5000:5000
     network_mode: "host"
     volumes:
       - scramble_captain_scrambles:/usr/src/scramble-captain-server/assets/scrambles

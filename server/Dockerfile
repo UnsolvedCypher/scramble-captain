@@ -19,7 +19,8 @@ RUN apt-get update && \
   # make our app
   cd /usr/src/scramble-captain-server && \
   shards install && \
-  lucky build.release
+  crystal build tasks.cr -o lucky && \
+  ./lucky build.release
 
 EXPOSE 5000
 
