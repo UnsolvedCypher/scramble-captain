@@ -6,6 +6,7 @@ import Router from 'next/router';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { withAuthSync, authFetch } from '../components/withAuthSync';
 import NewCompetitionModal from '../components/NewCompetitionModal';
+import withHeaderFooter from '../components/withHeaderFooter';
 
 interface HomeProps {
   competitions: Array<{id: number, name: string}>;
@@ -45,4 +46,4 @@ Home.getInitialProps = async (ctx) => {
   return { competitions: await res.json() };
 };
 
-export default withAuthSync(Home);
+export default withHeaderFooter(withAuthSync(Home));

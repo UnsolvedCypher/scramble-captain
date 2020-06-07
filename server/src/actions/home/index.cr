@@ -6,7 +6,7 @@ class Home::Index < ApiAction
     # We have to get rid of this because the gzip encoding messes everything up
     # This should be investigated further
     headers_to_send.delete("Accept-Encoding")
-    res = HTTP::Client.get "#{ENV["CLIENT_URL"] || "http://localhost:3000"}#{request.path}", headers_to_send
+    res = HTTP::Client.get "#{ENV["CLIENT_URL"]? || "http://localhost:3000"}#{request.path}", headers_to_send
     # In case of a redirect, include that header too
     res.headers["Location"]?.try do |location|
       response.headers["Location"] = location
