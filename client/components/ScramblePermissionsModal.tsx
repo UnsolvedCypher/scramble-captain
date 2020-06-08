@@ -1,5 +1,5 @@
 import {
-  Modal, Button, Form, Label, Table,
+  Modal, Button, Form, Table,
 } from 'semantic-ui-react';
 
 import React from 'react';
