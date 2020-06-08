@@ -4,6 +4,8 @@ import {
 } from 'semantic-ui-react';
 import Cookies from 'js-cookie';
 import Router from 'next/router';
+import { withAuthSync } from '../components/withAuthSync';
+import withHeaderFooter from '../components/withHeaderFooter';
 
 interface LoginState {
   login: string;
@@ -106,4 +108,4 @@ class SignUpPage extends React.Component<{}, LoginState> {
     );
   }
 }
-export default SignUpPage;
+export default withAuthSync(withHeaderFooter(SignUpPage));
