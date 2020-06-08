@@ -1,5 +1,5 @@
 import {
-  Container, Grid, Card, Button, Header,
+  Container, Grid, Card, Button, Header, Segment,
 } from 'semantic-ui-react';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -24,31 +24,37 @@ function Home(props: HomeProps) {
         <NewCompetitionModal onAdd={refreshProps} />
       </div>
       <br />
-      <Grid stackable doubling columns={4}>
-        {competitions.map((competition) => (
-          <Grid.Column key={competition.id}>
-            <Card>
-              <Link href="/competitions/[competitionId]" as={`/competitions/${competition.id}`}>
-                <Card.Content>
-                  <Header content={competition.name} />
-                </Card.Content>
-              </Link>
-              <Card.Content extra>
+      {competitions.length === 0 ? (
+        <Segment placeholder style={{ textAlign: 'center' }}>
+          <Header content="No competitions yet, why not create one?" />
+        </Segment>
+      ) : (
+        <Grid stackable doubling columns={4}>
+          {competitions.map((competition) => (
+            <Grid.Column key={competition.id}>
+              <Card>
                 <Link href="/competitions/[competitionId]" as={`/competitions/${competition.id}`}>
-                  <Button fluid primary content="Manage" style={{ marginBottom: '0.5em' }} />
+                  <Card.Content>
+                    <Header content={competition.name} />
+                  </Card.Content>
                 </Link>
-                <DeleteConfirmationModal
-                  buttonFluid
-                  buttonBasic
-                  deleteUrl={`api/competitions/${competition.id}`}
-                  confirmationText={`Are you sure you want to delete the competition "${competition.name}"?`}
-                  afterDelete={refreshProps}
-                />
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-        ))}
-      </Grid>
+                <Card.Content extra>
+                  <Link href="/competitions/[competitionId]" as={`/competitions/${competition.id}`}>
+                    <Button fluid primary content="Manage" style={{ marginBottom: '0.5em' }} />
+                  </Link>
+                  <DeleteConfirmationModal
+                    buttonFluid
+                    buttonBasic
+                    deleteUrl={`api/competitions/${competition.id}`}
+                    confirmationText={`Are you sure you want to delete the competition "${competition.name}"?`}
+                    afterDelete={refreshProps}
+                  />
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 }

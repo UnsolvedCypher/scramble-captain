@@ -14,8 +14,8 @@ services:
     container_name: scramble_captain_pg
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
-    ports:
-      - 5432:5432
+    # ports:
+    #   - 5432:5432
     volumes:
       - scramble_captain_db:/var/lib/postgresql/data
   frontend:
@@ -27,8 +27,8 @@ services:
         SCRAMBLE_CAPTAIN_DOMAIN: ${SCRAMBLE_CAPTAIN_DOMAIN}
     image: scramble_captain_client
     command: yarn start
-    ports:
-      - 3000:3000
+    # ports:
+      # - 3000:3000
   backend:
     stdin_open: true
     tty: true
@@ -44,8 +44,8 @@ services:
     command: bash -c "./lucky db.create && ./lucky db.migrate && ./start_server"
     depends_on:
       - postgres
-    ports:
-      - 5000:5000
+    # ports:
+    #   - 5000:5000
     volumes:
       - scramble_captain_scrambles:/usr/src/scramble-captain-server/assets/scrambles
 volumes:
