@@ -9,6 +9,8 @@ interface DCMProps {
   afterDelete: () => void;
   confirmationText: string;
   deleteUrl: string;
+  buttonFluid?: boolean;
+  buttonBasic?: boolean;
 }
 
 interface DCMState {
@@ -33,12 +35,19 @@ class DeleteConfirmationModal extends React.Component<DCMProps, DCMState> {
   }
 
   render = () => {
-    const { confirmationText } = this.props;
+    const { confirmationText, buttonFluid, buttonBasic } = this.props;
     const { open } = this.state;
     return (
       <>
-        <Button content="Delete" icon="remove" onClick={() => this.setState({ open: true })} />
+        <Button
+          content="Delete"
+          fluid={buttonFluid}
+          negative
+          basic={buttonBasic}
+          onClick={() => this.setState({ open: true })}
+        />
         <Modal
+          size="tiny"
           open={open}
           onClose={() => this.setState({ open: false })}
         >
@@ -47,7 +56,7 @@ class DeleteConfirmationModal extends React.Component<DCMProps, DCMState> {
 
           <Modal.Actions>
             <Button content="Cancel" onClick={() => this.setState({ open: false })} />
-            <Button icon="remove" content="Delete" negative onClick={this.doDelete} />
+            <Button content="Delete" negative onClick={this.doDelete} />
           </Modal.Actions>
         </Modal>
       </>

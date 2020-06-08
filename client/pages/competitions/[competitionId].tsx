@@ -1,8 +1,6 @@
 import {
-  Container, Menu, Item, Label, Button,
+  Container, Menu, Button, Grid, Card,
 } from 'semantic-ui-react';
-// import Link from 'next/link';
-import Router from 'next/router';
 import { NextPageContext } from 'next';
 import React from 'react';
 import { withAuthSync, authFetch, logout } from '../../components/withAuthSync';
@@ -10,6 +8,7 @@ import NewScrambleModal from '../../components/NewScrambleModal';
 import NewUserModal from '../../components/NewUserModal';
 import DeleteConfirmationModal from '../../components/DeleteConfirmationModal';
 import ScramblePermissionsModal from '../../components/ScramblePermissionsModal';
+import withHeaderFooter from '../../components/withHeaderFooter';
 
 interface User {
   id: number;
@@ -76,64 +75,87 @@ class Home extends React.Component<CompetitionProps, CompetitionState> {
     } = competition;
     return (
       <Container>
-        <Button content="Log out" onClick={() => logout(null)} />
         <h2>Scrambles</h2>
-        <Item.Group divided>
+        <div style={{ textAlign: 'right' }}>
+          <NewScrambleModal competitionId={id} onAdd={this.refreshProps} />
+        </div>
+        <br />
+        <Grid stackable doubling columns={4}>
           {scrambles.map((scramble) => (
-            <Item key={scramble.id}>
-              {/* <Label color={scramble.} */}
-              <Item.Header>
-                <Label color={scramble.scramblers.length > 0 ? 'green' : 'grey'} content={scramble.name} />
-              </Item.Header>
-              {/* <Item.Header content={scramble.name} /> */}
-              <Item.Extra>
-                <ScramblePermissionsModal
-                  onAdd={this.refreshProps}
-                  scrambleId={scramble.id}
-                  permittedScramblers={scramble.scramblers}
-                  competitionId={competition.id}
-                  allScramblers={scramblers}
-                />
-                <DeleteConfirmationModal
-                  deleteUrl={`api/competitions/${competition.id}/scrambles/${scramble.id}`}
-                  confirmationText={`Are you sure you want to delete scramble "${scramble.name}"?`}
-                  afterDelete={this.refreshProps}
-                />
-              </Item.Extra>
-            </Item>
+            <Grid.Column key={scramble.id}>
+              <Card>
+                <div style={{ backgroundColor: scramble.scramblers.length === 0 ? 'grey' : 'limegreen', height: '1em' }} />
+                <Card.Content>
+                  <Card.Header content={scramble.name} />
+                  <br />
+                  <Card.Meta content={scramble.scramblers.length === 0
+                    ? 'Scramble is closed'
+                    : `Scramble is open to ${scramblers.filter((s) => scramble.scramblers.includes(s.id)).map((s) => s.name).join(', ')}`}
+                  />
+                </Card.Content>
+                <Card.Content extra>
+                  <ScramblePermissionsModal
+                    onAdd={this.refreshProps}
+                    scrambleId={scramble.id}
+                    permittedScramblers={scramble.scramblers}
+                    competitionId={competition.id}
+                    allScramblers={scramblers}
+                  />
+                  <DeleteConfirmationModal
+                    buttonFluid
+                    buttonBasic
+                    deleteUrl={`api/competitions/${competition.id}/scrambles/${scramble.id}`}
+                    confirmationText={`Are you sure you want to delete scramble "${scramble.name}"?`}
+                    afterDelete={this.refreshProps}
+                  />
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+
           ))}
-        </Item.Group>
-        <NewScrambleModal competitionId={id} onAdd={this.refreshProps} />
+        </Grid>
         <h2>Scramblers</h2>
-        <Item.Group divided>
+        <div style={{ textAlign: 'right' }}>
+          <NewUserModal competitionId={id} onAdd={this.refreshProps} />
+        </div>
+        <br />
+        <Grid stackable doubling columns={4}>
           {scramblers.map((scrambler) => (
-            <Item key={scrambler.id}>
-              <Item.Header content={scrambler.name} />
-              <Item.Extra>
-                {scrambler.viewing.map((s) => (
-                  <Label content={`Viewing ${s}`} />
-                ))}
-                <DeleteConfirmationModal
-                  deleteUrl={`api/competitions/${competition.id}/scramblers/${scrambler.id}`}
-                  confirmationText={`Are you sure you want to delete scrambler "${scrambler.name}"?`}
-                  afterDelete={this.refreshProps}
-                />
-              </Item.Extra>
-            </Item>
+            <Grid.Column key={scrambler.id}>
+              <Card>
+                <Card.Content>
+                  <Card.Header content={scrambler.name} />
+                  <Card.Meta content={scrambler.viewing.length === 0
+                    ? 'Not viewing scrambles'
+                    : `Viewing ${scrambler.viewing.join(', ')}`}
+                  />
+                </Card.Content>
+                <Card.Content extra>
+                  <DeleteConfirmationModal
+                    buttonFluid
+                    buttonBasic
+                    deleteUrl={`api/competitions/${competition.id}/scramblers/${scrambler.id}`}
+                    confirmationText={`Are you sure you want to delete scrambler "${scrambler.name}"?`}
+                    afterDelete={this.refreshProps}
+                  />
+                </Card.Content>
+              </Card>
+            </Grid.Column>
           ))}
-        </Item.Group>
-        <NewUserModal competitionId={id} onAdd={this.refreshProps} />
+        </Grid>
 
         <h2>Delegates</h2>
-        <Menu vertical>
+        <Grid stackable doubling columns={4}>
           {delegates.map((delegate) => (
-            <Menu.Item key={delegate.id} content={delegate.name} />
+            <Grid.Column key={delegate.id}>
+              <Card header={delegate.name} />
+            </Grid.Column>
           ))}
-        </Menu>
+        </Grid>
       </Container>
     );
   }
 }
 
 
-export default withAuthSync(Home);
+export default withAuthSync(withHeaderFooter(Home));

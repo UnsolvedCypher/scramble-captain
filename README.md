@@ -37,7 +37,7 @@ The frontend is set up with a `.eslintrc.js` file, so it is recommended that you
 
 I have tried to ensure that this software is as secure as possible. If you believe you have discovered a security vulnerability, please email mmcmillan@worldcubeasosciation.org and do not open an issue or otherwise disclose the potential vulnerability until you have received confirmation that it is resolved.
 
-Authentication is handled via JWT (see `SignInUser` and `UserToken` classes). The JWT is valid for 12 hours and contains the user's ID and the expiration. On the client side, the JWT is stored in a cookie (see `withAuthSync.tsx`).
+Authentication is handled via JWT (see `SignInUser` and `UserToken` classes). The JWT is valid for 12 hours and contains the user's ID, the expiration time, and whether the user is a scrambler or not. The user's scrambler status is only used for routing on the front-end, it is never relied on by the server for granting access to any resources. On the client side, the JWT is stored in a cookie (see `withAuthSync.tsx`).
 
 All data except for the scrambles themselves are stored in a Postgres database called `scramble_captain_production`. The scrambles themselves are stored in `assets/scrambles` and their filename corresponds to an ID of a scramble object in the database.
 

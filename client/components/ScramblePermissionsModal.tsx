@@ -1,5 +1,5 @@
 import {
-  Modal, Button, Form, Label,
+  Modal, Button, Form, Label, Table,
 } from 'semantic-ui-react';
 
 import React from 'react';
@@ -92,9 +92,14 @@ class ScramblePermissionsModal extends React.Component<SPMProps, SPMState> {
         <Button
           icon="cogs"
           content="Permissions..."
+          basic
+          color="black"
+          fluid
+          style={{ marginBottom: '0.5em' }}
           onClick={() => this.setState({ open: true })}
         />
         <Modal
+          size="tiny"
           open={open}
           onClose={this.resetState}
         >
@@ -102,27 +107,37 @@ class ScramblePermissionsModal extends React.Component<SPMProps, SPMState> {
           <Modal.Content>
             <Form>
               {!success ? (
-                <>
-                  {allScramblers.map((scrambler) => (
-                    <React.Fragment key={scrambler.id}>
-                      <Label basic content={scrambler.name} />
-                      <OpenCloseButton
-                        open={this.scramblerIsOpen(scrambler.id)}
-                        onPermissionChange={(openScramble) => this.onPermissionChange(
-                          scrambler.id, openScramble,
-                        )}
-                      />
-                      <br />
-                      <br />
-                    </React.Fragment>
-                  ))}
-                  <Button primary content="Update" onClick={this.updateScramblePermissions} />
-                </>
+                <Table basic="very" celled collapsing style={{ margin: '0 auto' }}>
+                  <Table.Body>
+                    {allScramblers.map((scrambler) => (
+                      <Table.Row key={scrambler.id}>
+                        <Table.Cell content={`${scrambler.name} (${scrambler.id})`} />
+                        <Table.Cell>
+                          <OpenCloseButton
+                            open={this.scramblerIsOpen(scrambler.id)}
+                            onPermissionChange={(openScramble) => this.onPermissionChange(
+                              scrambler.id, openScramble,
+                            )}
+                          />
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
               ) : (
-                <Button positive content="Success! Click to close" onClick={this.resetState} />
+                <div style={{ width: '100%', textAlign: 'center' }}>
+                  <Button positive content="Success! Click to close" onClick={this.resetState} />
+                </div>
               )}
             </Form>
           </Modal.Content>
+
+          {!success && (
+            <Modal.Actions>
+              <Button content="Cancel" negative onClick={() => this.setState({ open: false })} />
+              <Button primary content="Update" onClick={this.updateScramblePermissions} />
+            </Modal.Actions>
+          )}
         </Modal>
       </>
     );

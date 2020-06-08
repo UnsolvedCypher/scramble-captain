@@ -29,6 +29,7 @@ module.exports = {
         "react/prop-types": 0,
         "react/react-in-jsx-scope": "off",
         "no-unused-vars": 1,
+        "indent": ["error", 2],
         // "typescript/no-unused-vars": 2,
         "import/extensions": [
             "error",

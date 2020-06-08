@@ -1,7 +1,9 @@
 import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import {
+  Dropdown, Menu, Container, Header,
+} from 'semantic-ui-react';
 import Iframe from 'react-iframe';
-import { authFetch } from '../components/withAuthSync';
+import { authFetch, logout } from '../components/withAuthSync';
 
 interface ScramblePageProps {
   permittedScrambles: Array<{name: string; id: number;}>;
@@ -57,32 +59,34 @@ export default class ScramblePage extends React.Component<ScramblePageProps, Scr
     const { currScrambleId, permittedScrambles } = this.state;
     if (permittedScrambles.length === 0) {
       return (
-        <p>No scrambles for you</p>
+        <div style={{ height: '100vh' }}>
+          <Menu inverted style={{ borderRadius: 0 }}>
+            <Menu.Item position="right" content="Log out" onClick={() => logout(null)} />
+          </Menu>
+          <Header content="No scrambles available" style={{ textAlign: 'center' }} />
+        </div>
       );
     }
-    console.log(currScrambleId);
     return (
-      <div style={{ height: '100vh' }}>
-        <br />
-        <div
-          style={{ margin: '0 auto', width: '100%', textAlign: 'center' }}
-        >
-          <Dropdown
-            defaultValue={currScrambleId}
-            options={permittedScrambles.map((scramble) => ({
-              key: scramble.id, value: scramble.id, text: scramble.name,
-            }))}
-            onChange={(_, data) => this.setState({ currScrambleId: Number.parseInt(`${data.value}`, 10) })}
-          />
-        </div>
-        <br />
+      <div style={{ height: '100vh', backgroundColor: 'black' }}>
+        <Menu inverted style={{ marginBottom: 0 }}>
+          <Container>
+            <Dropdown
+              item
+              defaultValue={currScrambleId}
+              options={permittedScrambles.map((scramble) => ({
+                key: scramble.id, value: scramble.id, text: scramble.name,
+              }))}
+              onChange={(_, data) => this.setState({ currScrambleId: Number.parseInt(`${data.value}`, 10) })}
+            />
+            <Menu.Item position="right" content="Log out" onClick={() => logout(null)} />
+          </Container>
+        </Menu>
         <Iframe
           width="100%"
           height="100%"
           url={`${process.env.backend}/api/competitions/${competitionId}/scrambles/${currScrambleId}`}
         />
-
-        {/* <iframe title="Scramble" src={`process.env.backend/api/competitions/${competitionId}/scrambles/${currScrambleId}`} /> */}
       </div>
     );
   }

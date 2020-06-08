@@ -60,6 +60,7 @@ class NewUserModal extends React.Component<NUMProps, NUMState> {
         <Modal
           open={open}
           onClose={this.resetState}
+          size="tiny"
         >
           <Modal.Header>Create scrambler</Modal.Header>
           <Modal.Content>
@@ -75,7 +76,6 @@ class NewUserModal extends React.Component<NUMProps, NUMState> {
                     value={name}
                     onChange={(e) => this.setState({ name: e.target.value })}
                   />
-                  <Button primary content="Create user" onClick={this.createUser} />
                 </>
               ) : (
                 <>
@@ -90,11 +90,20 @@ class NewUserModal extends React.Component<NUMProps, NUMState> {
                     {' '}
                     {createdUser.password}
                   </Message>
-                  <Button content="Click to close" onClick={this.resetState} />
                 </>
               )}
             </Form>
           </Modal.Content>
+          <Modal.Actions>
+            {createdUser == null ? (
+              <>
+                <Button negative content="Cancel" onClick={() => this.setState({ open: false })} />
+                <Button primary content="Create user" onClick={this.createUser} />
+              </>
+            ) : (
+              <Button content="Click to close" onClick={this.resetState} />
+            )}
+          </Modal.Actions>
         </Modal>
       </>
     );

@@ -1,82 +1,60 @@
-import React from 'react'
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
 import {
   Container,
-  Divider,
-  Dropdown,
-  Grid,
-  Header,
-  Image,
   List,
   Menu,
   Segment,
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+import Link from 'next/link';
+import { logout } from './withAuthSync';
 
 const withHeaderFooter = (InnerComponent) => {
-  const HeaderFooterPage = (props) => (
-    <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
-      <Menu fixed='top' inverted>
-        <Container>
-          <Menu.Item as='a' header>
-            {/* <Image size='mini' src='/logo.png' style={{ marginRight: '1.5em' }} /> */}
-            Scramble Captain
-          </Menu.Item>
-          {/* <Menu.Item as='a'>Home</Menu.Item> */}
+  const HeaderFooterPage = (props) => {
+    const { user } = props;
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Menu fixed="top" inverted>
+          <Container>
+            <Link href="/">
+              <Menu.Item as="a" header>
+                Scramble Captain
+              </Menu.Item>
+            </Link>
+            {user == null ? (
+              <Link href="/login"><Menu.Item position="right" content="Log in" /></Link>
+            ) : (
+              <Menu.Item position="right" content="Log out" onClick={() => logout(null)} />
+            )}
+          </Container>
+        </Menu>
+        <div style={{ marginTop: '7em' }} />
+        <div style={{ flexGrow: 1 }}>
+          <InnerComponent {...props} />
+        </div>
 
-          <Dropdown item simple text='Dropdown'>
-            <Dropdown.Menu>
-              <Dropdown.Item>List Item</Dropdown.Item>
-              <Dropdown.Item>List Item</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Header>Header Item</Dropdown.Header>
-              <Dropdown.Item>
-                <i className='dropdown icon' />
-                <span className='text'>Submenu</span>
-                <Dropdown.Menu>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown.Item>
-              <Dropdown.Item>List Item</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Container>
-      </Menu>
-      <div style={{marginTop: '7em'}} />
-      <div style={{flexGrow: 1}}>
-        <InnerComponent {...props} />
+        <Segment inverted vertical style={{ margin: '3em 0em 0em', padding: '3em 0em' }}>
+          <Container textAlign="center">
+            <List horizontal inverted divided link size="small">
+              <List.Item as="a" href="https://github.com/UnsolvedCypher/scramble-captain/blob/master/README.md">
+                About
+              </List.Item>
+              <List.Item as="a" href="https://github.com/unsolvedcypher/scramble-captain">
+                GitHub
+              </List.Item>
+            </List>
+          </Container>
+        </Segment>
       </div>
-
-      <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
-        <Container textAlign='center'>
-
-          {/* <Divider inverted section />
-          <Image centered size='mini' src='/logo.png' /> */}
-          <List horizontal inverted divided link size='small'>
-            <List.Item as='a' href='#'>
-              About
-            </List.Item>
-            <List.Item as='a' href='#'>
-              GitHub
-            </List.Item>
-            {/* <List.Item as='a' href='#'>
-              Terms and Conditions
-            </List.Item>
-            <List.Item as='a' href='#'>
-              Privacy Policy
-            </List.Item> */}
-          </List>
-        </Container>
-      </Segment>
-    </div>
-  )
+    );
+  };
   HeaderFooterPage.getInitialProps = async (ctx) => {
     if (InnerComponent.getInitialProps) {
       return InnerComponent.getInitialProps(ctx);
-    } else {
-      return {};
     }
-  }
+    return {};
+  };
   return HeaderFooterPage;
-}
+};
 
 export default withHeaderFooter;

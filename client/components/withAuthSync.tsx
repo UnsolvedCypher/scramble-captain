@@ -41,7 +41,8 @@ const getJwt = (ctx: NextPageContext) => {
   }
 };
 
-const getUser = (ctx: NextPageContext) => {
+// eslint-disable-next-line camelcase
+export const getUser = (ctx: NextPageContext): {user_id: number; is_scrambler: boolean;} => {
   try {
     return jwtDecode(getJwt(ctx));
   } catch (error) {

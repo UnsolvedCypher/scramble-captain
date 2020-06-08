@@ -4,6 +4,8 @@ import {
 } from 'semantic-ui-react';
 import Cookies from 'js-cookie';
 import Router from 'next/router';
+import { withAuthSync } from '../components/withAuthSync';
+import withHeaderFooter from '../components/withHeaderFooter';
 
 interface LoginState {
   login: string;
@@ -45,7 +47,7 @@ class LoginPage extends React.Component<{}, LoginState> {
   render = () => {
     const { login, password } = this.state;
     return (
-      <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
+      <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" textAlign="center">
             Log in to Scramble Captain
@@ -85,4 +87,4 @@ class LoginPage extends React.Component<{}, LoginState> {
     );
   }
 }
-export default LoginPage;
+export default withAuthSync(withHeaderFooter(LoginPage));

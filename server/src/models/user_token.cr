@@ -5,7 +5,11 @@ class UserToken
 
   def self.generate(user : User) : String
     # Tokens are valid for 12 hours
-    payload = {"user_id" => user.id, "exp" => Time.utc.to_unix + (12 * 60 * 60 * 1000)}
+    payload = {
+      "user_id"      => user.id,
+      "exp"          => Time.utc.to_unix + (12 * 60 * 60 * 1000),
+      "is_scrambler" => !user.competition_id.nil?,
+    }
 
     settings.stubbed_token || create_token(payload)
   end
