@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14-alpine
 WORKDIR /usr/src/scramble-captain-client
 ADD . ./
 ARG SCRAMBLE_CAPTAIN_DOMAIN

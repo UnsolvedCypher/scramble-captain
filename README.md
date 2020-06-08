@@ -15,19 +15,19 @@ At the bottom of the dashboard, all scramblers are listed along with which scram
 
 The backend is written in [Crystal](https://crystal-lang.org/) with the [Lucky](https://luckyframework.org/) framework, which is very similar to Rails. The frontend is written in [NextJS](https://nextjs.org/) with TypeScript.
 
-To run locally with Docker (to try it out, this is the easier option):
+To run locally with Docker (to try it out, this is the easier option so you don't clutter your system with dependencies):
 1. Clone this repo: `git clone https://github.com/UnsolvedCypher/scramble-captain.git`
 2. Install Docker and Docker Compose
 3. Navigate to the `scramble-captain` directory
 4. Run `docker-compose build`
-5. Run `docker-compose up`. You may need to wait a few moments before the app is accessible as the database needs to be build and migrated
+5. Run `docker-compose up`. You may need to wait a few moments before the app is accessible as the database needs to be built and migrated
 
 To run locally (for development):
 1. Clone this repo: `git clone https://github.com/UnsolvedCypher/scramble-captain.git`
-2. [Install Lucky and Postgres](https://luckyframework.org/guides/getting-started/installing)
-3. [Install Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/)
-4. `cd` into the `server` folder and run `script/setup`, then `lucky dev`
-5. `cd` into the `client` folder and run `yarn install`, then `yarn dev`
+2. Install Docker
+3. [Install Lucky and Postgres](https://luckyframework.org/guides/getting-started/installing)
+4. [Install Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/)
+5. Run `./setup-dev`
 
 You can access the site on `http://localhost:5000`. Some useful pages are /login (login for Delegates and scramblers), /scramble (scrambling page, for scramblers only), and / (Delegate dashboard, for Delegates only). The frontend will run on `http://localhost:3000`, but you should not access it directly because you will run into CORS errors.
 
