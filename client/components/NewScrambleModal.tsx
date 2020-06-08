@@ -69,8 +69,13 @@ class NewScrambleModal extends React.Component<NSMProps, NSMState> {
           <Modal.Header>Upload scrambles</Modal.Header>
           <Modal.Content>
             <Form>
-              <p>Upload one or more scrambles below:</p>
-              <input type="file" multiple onChange={(e) => this.setState({ files: Array.from(e.target.files) })} />
+              <p>Upload one or more scrambles (as PDF, not zip) below:</p>
+              <input
+                type="file"
+                accept=".pdf"
+                multiple
+                onChange={(e) => this.setState({ files: Array.from(e.target.files) })}
+              />
               {success ? (
                 <Button positive content="Success! Click to close" onClick={this.resetState} />
               ) : (
