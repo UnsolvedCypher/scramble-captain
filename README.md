@@ -29,7 +29,7 @@ To run locally (for development):
 4. [Install Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/)
 5. Run `./setup-dev`
 
-You can access the site on `http://localhost:5000`. Some useful pages are /login (login for Delegates and scramblers), /scramble (scrambling page, for scramblers only), and / (Delegate dashboard, for Delegates only). The frontend will run on `http://localhost:3000`, but you should not access it directly because you will run into CORS errors.
+You can access the site on `http://localhost`.
 
 The frontend is set up with a `.eslintrc.js` file, so it is recommended that you install the ESLint extension for your IDE or text editor so that your code is linted to match the rest of the code.
 
