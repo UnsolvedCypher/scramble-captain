@@ -10,10 +10,10 @@ RUN apt-get update && \
   curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz -o forego-stable-linux-amd64.tgz && \
   tar xvf forego-stable-linux-amd64.tgz -C /usr/local/bin && \
   # build lucky_cli
-  git clone https://github.com/luckyframework/lucky_cli --branch master --depth 1 /usr/local/lucky_cli && \
-  cd /usr/local/lucky_cli && \
-  shards install && \
-  crystal build src/lucky.cr -o /usr/local/bin/lucky && \
+  # git clone https://github.com/luckyframework/lucky_cli --branch master --depth 1 /usr/local/lucky_cli && \
+  # cd /usr/local/lucky_cli && \
+  # shards install && \
+  # crystal build src/lucky.cr -o /usr/local/bin/lucky && \
   # take out the trash
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
   # make our app
