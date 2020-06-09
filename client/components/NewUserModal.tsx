@@ -79,9 +79,8 @@ class NewUserModal extends React.Component<NUMProps, NUMState> {
                 </>
               ) : (
                 <>
-                  <Message negative content="Be sure to write down the password! You will not be able to look at it again" />
-                  <Message>
-                    <Message.Header content="User info" />
+                  <Message attached header="Log onto Scramble Captain with these credentials from the scrambling device" style={{ textAlign: 'center' }} />
+                  <Message attached>
                     User ID:
                     {' '}
                     {createdUser.id}
@@ -90,6 +89,7 @@ class NewUserModal extends React.Component<NUMProps, NUMState> {
                     {' '}
                     {createdUser.password}
                   </Message>
+                  <Message negative content="Be sure to write down the password! You will not be able to look at it again" />
                 </>
               )}
             </Form>

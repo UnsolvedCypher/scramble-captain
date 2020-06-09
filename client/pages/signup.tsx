@@ -56,7 +56,7 @@ class SignUpPage extends React.Component<{}, LoginState> {
       login, password, passwordConfirmation, name,
     } = this.state;
     return (
-      <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
+      <Grid textAlign="center">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" textAlign="center">
             Delegate registration
