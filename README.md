@@ -22,12 +22,12 @@ To run locally with Docker (to try it out, this is the easier option so you don'
 4. Run `docker-compose build`
 5. Run `docker-compose up`. You may need to wait a few moments before the app is accessible as the database needs to be built and migrated
 
-To run locally (for development):
+To run locally (for development, does not work on Windows):
 1. Clone this repo: `git clone https://github.com/UnsolvedCypher/scramble-captain.git`
 2. Install Docker
 3. [Install Lucky and Postgres](https://luckyframework.org/guides/getting-started/installing)
 4. [Install Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/)
-5. Run `./setup-dev`
+5. Run `./start-dev.sh`
 
 You can access the site on `http://localhost`.
 
